@@ -12,7 +12,6 @@ def home():
 	return jsonify({'message' : 'welcome to Fast-Food-Fast'}), 200
 
 
-
 #Initalization
 if __name__=="__main__":
 	app.run(debug = True)
