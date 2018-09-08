@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 
 app.config['SECRET_KEY'] = "philipotieno"
-
+user = {}
 
 #Homepage route
 @app.route('/api/v1/', methods=['GET'])
@@ -19,7 +19,10 @@ def register():
 	email = request.get_json()['email']
 	password = request.get_json()['password']
 
-	return jsonify({"message" : "registration succesfull"})
+	if username not in user:
+		user.update({username:{"name":name, "email":email, "password":password}})
+	return jsonify(user), 200
+	return jsonify({"message" : "registration succesfull"}), 200
 
 #Initalization
 if __name__=="__main__":
