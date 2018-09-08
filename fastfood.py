@@ -22,7 +22,6 @@ def register():
 	if username not in user:
 		user.update({username:{"name":name, "email":email, "password":password}})
 	return jsonify(user), 200
-	return jsonify({"message" : "registration succesfull"}), 200
 
 #Initalization
 if __name__=="__main__":
