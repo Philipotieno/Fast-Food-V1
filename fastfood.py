@@ -40,11 +40,13 @@ def log_auth(username, password):
 #check if user is in session
 def check_user(func):
 	@wraps(func)
-	def wraps(*args, **kwargs):
+	def wrap(*args, **kwargs):
 		if session["check_user"]:
-			return func(*args, *kwargs)
+			return func(*args, **kwargs)
 		else:
 			return jsonify({'message' : "please login to continue"}), 401
+
+	return wrap
 
 #Login if registered
 @app.route('/api/v1/login', methods=['POST'])
@@ -58,7 +60,9 @@ def login():
 	else:
 		return jsonify({'message' : "invalid details"}), 401
 
+#make an order
 @app.route('/api/v1/make_order', methods=['POST'])
+@check_user
 def make_order():
 	username = session.get("username")
 
@@ -68,7 +72,15 @@ def make_order():
 		orders.update({username:[]})
 	orders[username].append(food)
 	return jsonify({"message" : "Order sent"}), 200
+@app.route('/api/v1/history', methods=['GET'])
+@check_user
+def history():
+	username = session.get('username')
+	my_history = {}
+	for each in orders[username]:
+		my_history.update({orders[username].index(each) + 1:each})
+	return jsonify(my_history), 200
 
 #Initalization
 if __name__=="__main__":
-	app.run(debug = True,port=5006)
+	app.run(debug = True,port=5003)
