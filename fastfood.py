@@ -22,6 +22,7 @@ def register():
 	if username not in user:
 		user.update({username:{"name":name, "email":email, "password":password}})
 	return jsonify(user), 200
+
 #Login authorisation
 def log_auth(username, password):
 	if username in user:
@@ -35,9 +36,11 @@ def login():
 	username = request.get_json()['username']
 	password = request.get_json()['password']
 	if log_auth(username,password):
-		return jsonify({'messge' : 'welcome to Fast-Food-Fast'})
+		return jsonify({'messge' : 'welcome to Fast-Food-Fast'}), 200
 	else:
-		return jsonify({'messge' : 'invalid details'})
+		return jsonify({'messge' : 'invalid details'}), 401
+
+
 #Initalization
 if __name__=="__main__":
 	app.run(debug = True,port=5001)
