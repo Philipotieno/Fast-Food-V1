@@ -28,7 +28,7 @@ def register():
 		return jsonify(user), 200
 
 	else:
-		return jsonify({"message" : "Try another username"})
+		return jsonify({"message" : "User already registered"})
 
 #Login authorisation
 def log_auth(username, password):
@@ -52,6 +52,8 @@ def login():
 	username = request.get_json()['username']
 	password = request.get_json()['password']
 	if log_auth(username,password):
+		session['check_user'] = True
+		session['username'] = username
 		return jsonify({'message' : 'welcome to Fast-Food-Fast'}), 200
 	else:
 		return jsonify({'message' : "invalid details"}), 401
@@ -61,16 +63,12 @@ def make_order():
 	username = session.get("username")
 
 	food = request.get_json()['food']
-	quantity = request.get_json()['quantity']
-	location = request.get_json()['location']
 
 	if username not in orders:
 		orders.update({username:[]})
 	orders[username].append(food)
-	orders[username].append(quantity)
-	orders[username].append(location)
+	return jsonify({"message" : "Order sent"}), 200
 
-	return jsonify({"message": "You just made an order"})
 #Initalization
 if __name__=="__main__":
-	app.run(debug = True,port=5004)
+	app.run(debug = True,port=5006)
