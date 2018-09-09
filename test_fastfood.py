@@ -19,5 +19,10 @@ class Test_fastfood(unittest.TestCase):
 			response = i.get('/api/v1/login')
 			self.assertEqual(response.status_code, 405)
 
+	def test_make_order(self):
+		with app.test_client() as h:
+			response = h.get('/api/v1/make_order')
+			self.assertEqual(response.status_code, 405)
+
 if __name__ == '__main__':
 	unittest.main()
