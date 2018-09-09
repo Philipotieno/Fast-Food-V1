@@ -11,7 +11,12 @@ class Test_fastfood(unittest.TestCase):
 
 	def test_register(self):
 		with app.test_client() as h:
-			response = h.get('/api/v1/register',)
+			response = h.get('/api/v1/register')
+			self.assertEqual(response.status_code, 405)
+
+	def test_login(self):
+		with app.test_client() as i:
+			response = i.get('/api/v1/login')
 			self.assertEqual(response.status_code, 405)
 
 if __name__ == '__main__':
