@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/Philipotieno/Fast-Food-V1.svg?branch=ft-home)](https://travis-ci.org/Philipotieno/Fast-Food-V1)
