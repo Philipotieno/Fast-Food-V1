@@ -110,7 +110,7 @@ def update_order(order_id):
 def delete_order(order_id):
 	username = session.get('username')
 	del orders[username][order_id]
-	return jsonify({'message' : 'successfully deleted order'})
+	return jsonify({'message' : 'successfully deleted order'}), 200
 
 #Initalization
 if __name__=="__main__":
