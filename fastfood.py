@@ -72,6 +72,7 @@ def make_order():
 		orders.update({username:[]})
 	orders[username].append(food)
 	return jsonify({"message" : "Order sent"}), 200
+
 @app.route('/api/v1/history', methods=['GET'])
 @check_user
 def history():
@@ -86,26 +87,26 @@ def history():
 def fetch(order_id):
 	username =  session.get('username')
 	return jsonify({order_id:orders[username][order_id-1]}), 200
-	
-#Login authorisation
-def log_auth(username, password):
-	if username in user:
-		if password == user[username]['password']:
-			return True
-	return False
 
-#Login if registered
-@app.route('/api/v1/login', methods=['POST'])
-def login():
-	username = request.get_json()['username']
-	password = request.get_json()['password']
-	if log_auth(username,password):
-		return jsonify({'messge' : 'welcome to Fast-Food-Fast'}), 200
-	else:
-		return jsonify({'messge' : 'invalid details'}), 401
+#A function that updates the orders and maintains the index position
+def update(old_order, new_order, mlo):
+	for i in mlo:
+		if i == old_order:
+			index = mlo.index(i)
+			del mlo[index]
+			mlo.insert(index, new_order)
+
+#Update an existing food order	
+@app.route('/api/v1/update_order/<int:order_id>', methods=['PUT'])
+@check_user
+def update_order(order_id):
+	food = request.get_json()['food']
+	username = session.get('username')
+	old_order = orders[username][order_id-1]
+	update(old_order, food, orders[username])
+	return jsonify({'message' : 'order updated successfully'}), 200
 
 
 #Initalization
 if __name__=="__main__":
 	app.run(debug = True,port=5003)
-  
