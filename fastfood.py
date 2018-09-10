@@ -87,6 +87,25 @@ def fetch(order_id):
 	username =  session.get('username')
 	return jsonify({order_id:orders[username][order_id-1]}), 200
 	
+#Login authorisation
+def log_auth(username, password):
+	if username in user:
+		if password == user[username]['password']:
+			return True
+	return False
+
+#Login if registered
+@app.route('/api/v1/login', methods=['POST'])
+def login():
+	username = request.get_json()['username']
+	password = request.get_json()['password']
+	if log_auth(username,password):
+		return jsonify({'messge' : 'welcome to Fast-Food-Fast'}), 200
+	else:
+		return jsonify({'messge' : 'invalid details'}), 401
+
+
 #Initalization
 if __name__=="__main__":
 	app.run(debug = True,port=5003)
+  
