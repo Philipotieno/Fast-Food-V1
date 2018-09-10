@@ -1,1 +1,1 @@
-[![Build Status](https://travis-ci.org/Philipotieno/Fast-Food-V1.svg?branch=ft-get-order)](https://travis-ci.org/Philipotieno/Fast-Food-V1)
+[![Build Status](https://travis-ci.org/Philipotieno/Fast-Food-V1.svg?branch=develop)](https://travis-ci.org/Philipotieno/Fast-Food-V1)

@@ -107,6 +107,14 @@ def update_order(order_id):
 	return jsonify({'message' : 'order updated successfully'}), 200
 
 
+@app.route('/api/v1/delete_order/<int:order_id>', methods=['DELETE'])
+@check_user
+def delete_order(order_id):
+	username = session.get('username')
+	del orders[username][order_id]
+	return jsonify({'message' : 'successfully deleted order'}), 200
+
 #Initalization
 if __name__=="__main__":
-	app.run(debug = True,port=5003)
+	app.run(debug = True,port=5012)
+

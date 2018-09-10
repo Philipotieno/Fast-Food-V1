@@ -22,7 +22,12 @@ class Test_fastfood(unittest.TestCase):
 	def test_make_order(self):
 		with app.test_client() as h:
 			response = h.get('/api/v1/make_order')
+			self.assertEqual(response.status_code, 405)
 
+	def test_update_order(self):
+		with app.test_client() as test:
+			self.assertEqual(test.get('/api/v1/update_order/1').status_code, 405)
+			self.assertEqual(test.get('/api/v1/update_order/').status_code, 404)
 
 if __name__ == '__main__':
 	unittest.main()
